@@ -10,7 +10,7 @@ import {
   LastTransaction, 
 } from "./style";
 
-type Props = {
+ interface Props  {
   type: 'up' | 'down'| 'total',
   title: string,
   amount: string,
