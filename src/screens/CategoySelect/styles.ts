@@ -10,7 +10,7 @@ interface CategoryProps{
 
 export const Container = styled.View`
  flex:1 ;
- background-color: ${({theme}) => theme.colors.background} ;
+ background-color: ${({theme}) => theme.colors.shape} ;
 `;
 
 export const Header = styled.View`
