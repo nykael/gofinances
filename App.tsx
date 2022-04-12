@@ -5,6 +5,9 @@ import { StatusBar } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { ThemeProvider } from 'styled-components';
 
+import { AuthProvider } from './src/hooks/auth';
+
+
 import{
   useFonts,
   Poppins_400Regular,
@@ -17,6 +20,8 @@ import theme from './src/global/styles/theme'
 import { NavigationContainer} from '@react-navigation/native'
 
 import { AppRoutes } from './src/routes/app.routes';
+
+import {SingIn} from './src/screens/SingIn'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -34,7 +39,11 @@ export default function App() {
       <StatusBar barStyle={'light-content'}
       backgroundColor='transparent'
       translucent/>
-      <AppRoutes/>
+
+      <AuthProvider>
+       <SingIn/>
+      </AuthProvider>
+
     </NavigationContainer>
   </ThemeProvider>
     
