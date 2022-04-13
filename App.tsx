@@ -5,7 +5,7 @@ import { StatusBar } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { ThemeProvider } from 'styled-components';
 
-import { AuthProvider } from './src/hooks/auth';
+import { AuthProvider, useAuth } from './src/hooks/auth';
 
 
 import{
@@ -30,7 +30,9 @@ export default function App() {
     Poppins_700Bold
   });
 
-  if(!fontsLoaded) {
+  const { userStoragedLoading } = useAuth()
+
+  if(!fontsLoaded || userStoragedLoading) {
     return <AppLoading/>
   }
   return (
