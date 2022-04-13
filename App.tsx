@@ -17,7 +17,7 @@ import{
 
 import theme from './src/global/styles/theme'
 
-import { NavigationContainer} from '@react-navigation/native'
+import { Routes} from './src/routes/index'
 
 import { AppRoutes } from './src/routes/app.routes';
 
@@ -35,16 +35,12 @@ export default function App() {
   }
   return (
   <ThemeProvider theme={theme}>
-    < NavigationContainer>
       <StatusBar barStyle={'light-content'}
       backgroundColor='transparent'
       translucent/>
-
       <AuthProvider>
-       <SingIn/>
+       <Routes/>
       </AuthProvider>
-
-    </NavigationContainer>
   </ThemeProvider>
     
   )

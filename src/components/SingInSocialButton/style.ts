@@ -19,7 +19,7 @@ export const ImageContainer = styled.View`
   align-items:center ;
 
   padding:${RFValue(16)}px ;
-  border-color:${({theme}) => theme.colors.background} ;
+  border-color:${({theme}) => theme.colors.shape} ;
   border-right-width:1px ;
 `;
 export const Text = styled.Text`
