@@ -74,7 +74,7 @@ export function SingIn () {
         </TitleWrapper>
 
         <SingInTitle>
-          Faça seu lofin com  {'\n'}
+          Faça seu login com  {'\n'}
           uma das contas abaixo
         </SingInTitle>
       </Header>
