@@ -51,21 +51,24 @@ export function Dashboard() {
 
   function getLastTransactionDate(
    collection : DataListProps [],
-   type: 'positive' | 'negative'
-  ){
+   type: 'positive' | 'negative')
+  {
+    const collectionFiltered = collection.filter( transaction => transaction.type === type)
+    if(collectionFiltered.length === 0)
+     return 0
 
-  const lastTransaction = new Date(
-  Math.max.apply(Math,  collection 
-  .filter(transaction => transaction.type === type)
-  .map(transaction=> new Date(transaction.date).getTime())));
 
-  return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR',{
-    month: 'long'
-  })}`;
+    const lastTransaction = new Date(
+    Math.max.apply(Math,  collectionFiltered 
+    .map(transaction=> new Date(transaction.date).getTime())));
+
+    return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR',{
+      month: 'long'
+    })}`;
  }
 
   async function loadTransactions(){
-  const dataKey = '@gofinances:transaction';
+  const dataKey = `@gofinances:transaction_user:${user.id}`
   const response = await AsyncStorage.getItem(dataKey);
   const transactions = response ? JSON.parse(response) : [];
 
@@ -106,7 +109,11 @@ export function Dashboard() {
 
   const lasTransactionEntries = getLastTransactionDate(transactions, 'positive');
   const lasTransactionExpensives = getLastTransactionDate(transactions, 'negative');
-  const totalInterval = `01 a ${lasTransactionExpensives}`
+
+
+  const totalInterval = lasTransactionExpensives === 0 
+  ? 'Não há transações' 
+  :`01 a ${lasTransactionExpensives}`
   
   const total = entriesTotal - expensiveTotal;
 
@@ -116,7 +123,9 @@ export function Dashboard() {
         style: 'currency',
         currency: 'BRL'
       }),
-      lastTransaction: `Última entrada dia ${lasTransactionEntries}`,
+      lastTransaction: lasTransactionEntries === 0 
+      ? 'Não há transações' 
+      :`Última entrada dia ${lasTransactionEntries}`,
 
     },
     expensives: {
@@ -124,7 +133,9 @@ export function Dashboard() {
         style: 'currency',
         currency: 'BRL'
       }),
-      lastTransaction: `Última saída dia ${lasTransactionExpensives}`,
+      lastTransaction: lasTransactionExpensives === 0 
+      ? 'Não há transações' 
+      :`Última saída dia ${lasTransactionExpensives}`,
     },
     total: {
       amount: total.toLocaleString('pt-Br', {

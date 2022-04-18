@@ -9,8 +9,10 @@ import { useFocusEffect } from "@react-navigation/native";
 import {ptBR} from 'date-fns/locale'
 
 import { useTheme } from "styled-components";
+import { useAuth } from "../../hooks/auth";
 
 import { HistoryCard } from "../../components/HistoryCard";
+import { categories } from "../../utils/categories";
 
 import { Container,
   Header,
@@ -24,7 +26,6 @@ import { Container,
   LoadContainer,
 
 } from "./styles";
-import { categories } from "../../utils/categories";
 
 interface TransactionData {
   type: 'positive' | 'negative'
@@ -51,6 +52,7 @@ export function Resume () {
 
 
   const theme = useTheme();
+  const {user} = useAuth()
 
   function handlDateChange(action : 'next' | 'prev') {
     if(action ==='next') {
@@ -63,7 +65,7 @@ export function Resume () {
 
   async function loadData() {
     setIsLoadin(true)
-    const dataKey = '@gofinances:transaction'
+    const dataKey = `@gofinances:transaction_user:${user.id}`
     const response = await AsyncStorage.getItem(dataKey);
     const responseFormatted = response ? JSON.parse(response) : [];
 
